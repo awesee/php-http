@@ -3,6 +3,7 @@
 namespace Openset;
 
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
 
 class HttpClient
 {
@@ -18,6 +19,16 @@ class HttpClient
         }
 
         return self::$client;
+    }
+
+    public static function request($method, $uri = '', array $options = [])
+    {
+        $response = self::getClient()->request($method, $uri, $options);
+        if ($response instanceof ResponseInterface) {
+            return $response->getBody();
+        }
+
+        return false;
     }
 
 }
