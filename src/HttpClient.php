@@ -65,7 +65,7 @@ class HttpClient
      * @return bool|\Psr\Http\Message\StreamInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public static function post($url, array $options = [])
+    public static function post($url, $options = [])
     {
         $key = is_array($options) ? 'form_params' : 'body';
 
@@ -92,6 +92,33 @@ class HttpClient
             ],
         ]);
     }
+
+    /**
+     * @param $url
+     * @param array $files
+     * @param array $form
+     * @param array $queries
+     * @return bool|\Psr\Http\Message\StreamInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function upload($url, array $files = [], array $form = [], array $queries = [])
+    {
+        $multipart = [];
+
+        foreach ($files as $name => $path) {
+            $multipart[] = [
+                'name' => $name,
+                'contents' => fopen($path, 'r'),
+            ];
+        }
+
+        foreach ($form as $name => $contents) {
+            $multipart[] = compact('name', 'contents');
+        }
+
+        return self::request('POST', $url, ['query' => $queries, 'multipart' => $multipart]);
+    }
+
 
     /**
      * @param $method
