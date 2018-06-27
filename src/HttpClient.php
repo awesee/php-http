@@ -16,16 +16,25 @@ class HttpClient
      */
     protected static $client;
 
+    protected static $defaults = [
+        'debug' => false,
+        'verify' => true,
+        // You can set any number of default request options.
+        'timeout' => 30,
+    ];
+
+    public static function setConfig(array $config)
+    {
+        self::$defaults = $config + self::$defaults;
+    }
+
     /**
      * @return Client
      */
     public static function getClient()
     {
         if (is_null(self::$client)) {
-            self::$client = new Client([
-                // You can set any number of default request options.
-                'timeout' => 30.0,
-            ]);
+            self::$client = new Client(self::$defaults);
         }
 
         return self::$client;
