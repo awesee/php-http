@@ -3,6 +3,7 @@
     "description": "Http request for php",
     "type": "library",
     "require": {
+        "php": ">=5.6",
         "guzzlehttp/guzzle": "^6.3"
     },
     "license": "MIT",

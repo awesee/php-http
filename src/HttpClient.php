@@ -60,6 +60,19 @@ class HttpClient
     }
 
     /**
+     * @param $url
+     * @param array $options
+     * @return bool|\Psr\Http\Message\StreamInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function post($url, array $options = [])
+    {
+        $key = is_array($options) ? 'form_params' : 'body';
+
+        return self::request('POST', $url, [$key => $options]);
+    }
+
+    /**
      * @param $method
      * @param array $args
      * @return bool|mixed
