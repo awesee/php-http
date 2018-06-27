@@ -73,6 +73,27 @@ class HttpClient
     }
 
     /**
+     * @param $url
+     * @param string $options
+     * @param array $queries
+     * @param int $encodeOption
+     * @return bool|\Psr\Http\Message\StreamInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function json($url, $options = '{}', array $queries = [], $encodeOption = JSON_UNESCAPED_UNICODE)
+    {
+        is_array($options) && $options = json_encode($options, $encodeOption);
+
+        return self::request('POST', $url, [
+            'query' => $queries,
+            'body' => $options,
+            'headers' => [
+                'content-type' => 'application/json'
+            ],
+        ]);
+    }
+
+    /**
      * @param $method
      * @param array $args
      * @return bool|mixed
