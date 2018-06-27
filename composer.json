@@ -1,0 +1,21 @@
+{
+    "name": "openset/http",
+    "description": "Http request for php",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Openset",
+            "email": "openset.wang@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Openset\\": "src/"
+        }
+    }
+}
