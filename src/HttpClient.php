@@ -17,18 +17,23 @@ class HttpClient
     protected static $client;
 
     protected static $defaults = [
-        'debug' => false,
-        'verify' => true,
+        'debug'   => false,
+        'verify'  => true,
         // You can set any number of default request options.
         'timeout' => 30,
     ];
 
+    /**
+     * 配置
+     * @param array $config
+     */
     public static function setConfig(array $config)
     {
         self::$defaults = $config + self::$defaults;
     }
 
     /**
+     * 客户端
      * @return Client
      */
     public static function getClient()
@@ -41,9 +46,10 @@ class HttpClient
     }
 
     /**
-     * @param $method
+     * 请求
+     * @param        $method
      * @param string $uri
-     * @param array $options
+     * @param array  $options
      * @return bool|\Psr\Http\Message\StreamInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
@@ -58,7 +64,8 @@ class HttpClient
     }
 
     /**
-     * @param $uri
+     * get请求
+     * @param       $uri
      * @param array $options
      * @return bool|\Psr\Http\Message\StreamInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -69,7 +76,8 @@ class HttpClient
     }
 
     /**
-     * @param $url
+     * post请求
+     * @param       $url
      * @param array $options
      * @return bool|\Psr\Http\Message\StreamInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -82,28 +90,30 @@ class HttpClient
     }
 
     /**
-     * @param $url
+     * post json 数据
+     * @param        $url
      * @param string $options
-     * @param array $queries
-     * @param int $encodeOption
+     * @param array  $queries
+     * @param int    $encodeOption
      * @return bool|\Psr\Http\Message\StreamInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function json($url, $options = '{}', array $queries = [], $encodeOption = JSON_UNESCAPED_UNICODE)
+    public static function json($url, $options = '{}', array $queries = [], $encodeOption = JSON_UNESCAPED_UNICODE)
     {
         is_array($options) && $options = json_encode($options, $encodeOption);
 
         return self::request('POST', $url, [
-            'query' => $queries,
-            'body' => $options,
+            'query'   => $queries,
+            'body'    => $options,
             'headers' => [
-                'content-type' => 'application/json'
+                'content-type' => 'application/json',
             ],
         ]);
     }
 
     /**
-     * @param $url
+     * 文件上传
+     * @param       $url
      * @param array $files
      * @param array $form
      * @param array $queries
@@ -116,7 +126,7 @@ class HttpClient
 
         foreach ($files as $name => $path) {
             $multipart[] = [
-                'name' => $name,
+                'name'     => $name,
                 'contents' => fopen($path, 'r'),
             ];
         }
@@ -130,7 +140,8 @@ class HttpClient
 
 
     /**
-     * @param $method
+     * 解析json字符串
+     * @param       $method
      * @param array $args
      * @return bool|mixed
      */
