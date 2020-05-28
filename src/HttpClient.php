@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class HttpClient
+ *
  * @package Openset
  */
 class HttpClient
@@ -25,6 +26,7 @@ class HttpClient
 
     /**
      * 配置
+     *
      * @param array $config
      */
     public static function setConfig(array $config)
@@ -34,6 +36,7 @@ class HttpClient
 
     /**
      * 客户端
+     *
      * @return Client
      */
     public static function getClient()
@@ -47,6 +50,7 @@ class HttpClient
 
     /**
      * 请求
+     *
      * @param        $method
      * @param string $uri
      * @param array  $options
@@ -65,6 +69,7 @@ class HttpClient
 
     /**
      * get请求
+     *
      * @param       $uri
      * @param array $options
      * @return bool|\Psr\Http\Message\StreamInterface
@@ -77,6 +82,7 @@ class HttpClient
 
     /**
      * post请求
+     *
      * @param       $url
      * @param array $options
      * @return bool|\Psr\Http\Message\StreamInterface
@@ -91,6 +97,7 @@ class HttpClient
 
     /**
      * post json 数据
+     *
      * @param        $url
      * @param string $options
      * @param array  $queries
@@ -113,6 +120,7 @@ class HttpClient
 
     /**
      * 文件上传
+     *
      * @param       $url
      * @param array $files
      * @param array $form
@@ -138,9 +146,9 @@ class HttpClient
         return self::request('POST', $url, ['query' => $queries, 'multipart' => $multipart]);
     }
 
-
     /**
      * 解析json字符串
+     *
      * @param       $method
      * @param array $args
      * @return bool|mixed
